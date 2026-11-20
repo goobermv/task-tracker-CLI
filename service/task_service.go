@@ -37,6 +37,6 @@ func GetTasks(taskList []models.Task) {
 	fmt.Println("Task List:")
 
 	for _, task := range taskList {
-		fmt.Printf("\nID: %d\nTitle: %s\nDescription: %s\nCompleted: %b\nCreated At: %t\n", task.ID, task.Title, task.Description, task.Completed, task.CreatedAt)
+		fmt.Printf("\nID: %d\nTitle: %s\nDescription: %s\nCompleted: %t\nCreated At: %s\n", task.ID, task.Title, task.Description, task.Completed, task.CreatedAt.Format("2006-01-02 15:04:05"))
 	}
 }
