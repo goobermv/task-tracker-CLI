@@ -13,10 +13,10 @@ var taskIDCounter atomic.Uint64
 
 func AddTask(title, description string, taskList *[]models.Task) error {
 	if title == "" {
-		return fmt.Errorf("Title is empty, please input a title for the task...")
+		return fmt.Errorf("Title is empty, please input a title for the task")
 	}
 	if description == "" {
-		return fmt.Errorf("Description is empty, please input a description for the task.")
+		return fmt.Errorf("Description is empty, please input a description for the task")
 	}
 
 	task := &models.Task{
@@ -46,7 +46,7 @@ func GetTaskByID(taskList []models.Task) (*models.Task, error) {
 	var taskID int
 	fmt.Print("Enter task ID to find: ")
 	if _, err := fmt.Scan(&taskID); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failed to scan input: %v", err)
 	}
 
 	for i := range taskList {
@@ -64,7 +64,7 @@ func CompleteTask(taskList *[]models.Task) error {
 	var taskID int
 	fmt.Print("Enter task ID to change status: ")
 	if _, err := fmt.Scan(&taskID); err != nil {
-		return err
+		return fmt.Errorf("Failed to scan input: %v", err)
 	}
 
 	for i := range *taskList {
@@ -85,7 +85,7 @@ func DeleteTask(taskList *[]models.Task) error {
 	var taskID int
 	fmt.Print("Enter task ID to delete: ")
 	if _, err := fmt.Scan(&taskID); err != nil {
-		return err
+		return fmt.Errorf("Failed to scan input: %v", err)
 	}
 
 	for _, task := range *taskList {
