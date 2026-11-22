@@ -22,19 +22,19 @@ func ToJSON(task models.Task) error {
 	return nil
 }
 
-func FromJSON(taskList []models.Task) error {
+func FromJSON(taskList []models.Task) (*[]models.Task, error) {
 	data, err := os.ReadFile("tasks.json")
 	if err != nil {
-		return fmt.Errorf("failed to read file")
+		return nil, fmt.Errorf("failed to read file")
 	}
 
 	if err := json.Unmarshal(data, &taskList); err != nil {
-		return fmt.Errorf("failed to parse JSON: %v", err)
+		return nil, fmt.Errorf("failed to parse JSON: %v", err)
 	}
 
-	for _, task := range taskList {
-		fmt.Printf("%+v\n", task)
-	}
-
-	return nil
+	return &taskList, nil
 }
+
+// adding a find by ID JSON function
+// adding an update JSON struct function
+// adding a delete JSON struct function
