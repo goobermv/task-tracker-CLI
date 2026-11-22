@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/goobermv/task-tracker-CLI/service"
+	"github.com/goobermv/task-tracker-CLI/internal/service"
 )
 
 func main() {
@@ -65,17 +65,44 @@ func main() {
 			}
 
 		case 3:
-			if err := service.GetTaskByID(); err != nil {
+			fmt.Print("\nEnter task ID to find: ")
+			if !scanner.Scan() {
+				return
+			}
+			taskID, err := strconv.Atoi(scanner.Text())
+			if err != nil {
+				fmt.Println("Error: ", err)
+			}
+
+			if err := service.GetTaskByID(taskID); err != nil {
 				fmt.Println("Error:", err)
 			}
 
 		case 4:
-			if err := service.CompleteTask(); err != nil {
+			fmt.Print("\nEnter task ID of completed task: ")
+			if !scanner.Scan() {
+				return
+			}
+			taskID, err := strconv.Atoi(scanner.Text())
+			if err != nil {
+				fmt.Println("Error: ", err)
+			}
+
+			if err := service.CompleteTask(taskID); err != nil {
 				fmt.Println("Error:", err)
 			}
 
 		case 5:
-			if err := service.DeleteTask(); err != nil {
+			fmt.Print("\nEnter task ID of task to be deleted: ")
+			if !scanner.Scan() {
+				return
+			}
+			taskID, err := strconv.Atoi(scanner.Text())
+			if err != nil {
+				fmt.Println("Error: ", err)
+			}
+
+			if err := service.DeleteTask(taskID); err != nil {
 				fmt.Println("Error:", err)
 			}
 

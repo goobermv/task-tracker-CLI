@@ -65,13 +65,7 @@ func GetTasks() error {
 	return nil
 }
 
-func GetTaskByID() error {
-	var taskID int
-	fmt.Print("\nEnter task ID to find: ")
-	if _, err := fmt.Scan(&taskID); err != nil {
-		return fmt.Errorf("Failed to scan input: %v", err)
-	}
-
+func GetTaskByID(taskID int) error {
 	taskList, err := storage.FromJSON()
 	if err != nil {
 		return err
@@ -88,13 +82,7 @@ func GetTaskByID() error {
 	return fmt.Errorf("No task with this ID")
 }
 
-func CompleteTask() error {
-	var taskID int
-	fmt.Print("Enter task ID to change status: ")
-	if _, err := fmt.Scan(&taskID); err != nil {
-		return fmt.Errorf("Failed to scan input: %v", err)
-	}
-
+func CompleteTask(taskID int) error {
 	taskList, err := storage.FromJSON()
 	if err != nil {
 		return err
@@ -121,13 +109,7 @@ func CompleteTask() error {
 	return fmt.Errorf("No task with this ID")
 }
 
-func DeleteTask() error {
-	var taskID int
-	fmt.Print("Enter task ID to delete: ")
-	if _, err := fmt.Scan(&taskID); err != nil {
-		return fmt.Errorf("Failed to scan input: %v", err)
-	}
-
+func DeleteTask(taskID int) error {
 	taskList, err := storage.FromJSON()
 	if err != nil {
 		return err
