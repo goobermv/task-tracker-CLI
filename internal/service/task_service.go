@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/goobermv/task-tracker-CLI/models"
-	"github.com/goobermv/task-tracker-CLI/storage"
+	"github.com/goobermv/task-tracker-CLI/internal/models"
+	"github.com/goobermv/task-tracker-CLI/internal/storage"
 )
 
 func AddTask(title, description string) error {

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/goobermv/task-tracker-CLI/models"
+	"github.com/goobermv/task-tracker-CLI/internal/models"
 )
 
 func ToJSON(tasks []models.Task) error {
