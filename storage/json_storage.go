@@ -1,40 +1,47 @@
 package storage
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/goobermv/task-tracker-CLI/models"
 )
 
-func ToJSON(task models.Task) error {
-	data, err := json.MarshalIndent(task, "", " ")
+func ToJSON(tasks []models.Task) error {
+	data, err := json.MarshalIndent(tasks, "", " ")
 	if err != nil {
-		return fmt.Errorf("Failed to marshal into JSON: %v", err)
+		return fmt.Errorf("failed to marshal into JSON: %w", err)
 	}
 
-	err = os.WriteFile("tasks.json", data, 0644)
+	err = os.WriteFile("data/tasks.json", data, 0644)
 	if err != nil {
-		return fmt.Errorf("Failed to write to file: %v", err)
+		return fmt.Errorf("Failed to write to file: %w", err)
 	}
 
 	return nil
 }
 
-func FromJSON(taskList []models.Task) (*[]models.Task, error) {
-	data, err := os.ReadFile("tasks.json")
+func FromJSON() ([]models.Task, error) {
+	data, err := os.ReadFile("data/tasks.json")
 	if err != nil {
-		return nil, fmt.Errorf("failed to read file")
+		if errors.Is(err, os.ErrNotExist) {
+			return []models.Task{}, nil
+		}
+		return nil, fmt.Errorf("failed to read file: %w", err)
 	}
+
+	if len(bytes.TrimSpace(data)) == 0 {
+		return []models.Task{}, nil
+	}
+
+	var taskList []models.Task
 
 	if err := json.Unmarshal(data, &taskList); err != nil {
-		return nil, fmt.Errorf("failed to parse JSON: %v", err)
+		return nil, fmt.Errorf("failed to parse JSON: %w", err)
 	}
 
-	return &taskList, nil
+	return taskList, nil
 }
-
-// adding a find by ID JSON function
-// adding an update JSON struct function
-// adding a delete JSON struct function

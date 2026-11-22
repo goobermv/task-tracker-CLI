@@ -1,0 +1,16 @@
+[
+ {
+  "id": 1,
+  "title": "Clean Room",
+  "description": "Mop the floors",
+  "completed": true,
+  "created_at": "2026-11-22T20:37:22.154448979+03:00"
+ },
+ {
+  "id": 2,
+  "title": "Clean Bathroom",
+  "description": "Wash the bathroom floors",
+  "completed": false,
+  "created_at": "2026-11-22T20:37:55.764333839+03:00"
+ }
+]

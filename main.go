@@ -4,54 +4,83 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 
-	"github.com/goobermv/task-tracker-CLI/models"
 	"github.com/goobermv/task-tracker-CLI/service"
 )
 
 func main() {
 	fmt.Println("---Task Tracker CLI---")
 
-	var taskList []models.Task
+	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
 		fmt.Println("\nChoose an option:")
-		fmt.Println("\n1 - Add a new task")
+		fmt.Println("1 - Add a new task")
 		fmt.Println("2 - Print all tasks")
 		fmt.Println("3 - Find task by ID")
 		fmt.Println("4 - Mark a task as completed")
 		fmt.Println("5 - Delete a task")
 		fmt.Println("0 - Exit")
 
-		var i int
 		fmt.Print("\nEnter a number: ")
-		fmt.Scan(&i)
-		if i == 0 {
-			fmt.Println("Exiting program..")
+
+		if !scanner.Scan() {
+			fmt.Println("\nInput closed. Exiting...")
 			return
 		}
 
-		switch i {
-		case 1:
-			scanner := bufio.NewScanner(os.Stdin)
+		choice, err := strconv.Atoi(scanner.Text())
+		if err != nil {
+			fmt.Println("Please enter a valid number.")
+			continue
+		}
 
+		if choice == 0 {
+			fmt.Println("Exiting program...")
+			return
+		}
+
+		switch choice {
+		case 1:
 			fmt.Print("\nEnter a title: ")
-			scanner.Scan()
+			if !scanner.Scan() {
+				return
+			}
 			title := scanner.Text()
+
 			fmt.Print("Enter a description: ")
-			scanner.Scan()
+			if !scanner.Scan() {
+				return
+			}
 			description := scanner.Text()
 
-			service.AddTask(title, description, &taskList)
+			if err := service.AddTask(title, description); err != nil {
+				fmt.Println("Error:", err)
+			}
 
 		case 2:
-			service.GetTasks(taskList)
+			if err := service.GetTasks(); err != nil {
+				fmt.Println("Error:", err)
+			}
+
 		case 3:
-			service.GetTaskByID(taskList)
+			if err := service.GetTaskByID(); err != nil {
+				fmt.Println("Error:", err)
+			}
+
 		case 4:
-			service.CompleteTask(&taskList)
+			if err := service.CompleteTask(); err != nil {
+				fmt.Println("Error:", err)
+			}
+
 		case 5:
-			service.DeleteTask(&taskList)
+			if err := service.DeleteTask(); err != nil {
+				fmt.Println("Error:", err)
+			}
+
+		default:
+			fmt.Println("Unknown option. Try again.")
 		}
 	}
 }
