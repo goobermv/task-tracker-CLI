@@ -11,7 +11,7 @@ import (
 )
 
 func ToJSON(tasks []models.Task) error {
-	data, err := json.MarshalIndent(tasks, "", " ")
+	data, err := json.MarshalIndent(tasks, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal into JSON: %w", err)
 	}
