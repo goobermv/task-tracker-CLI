@@ -10,10 +10,10 @@ import (
 
 func AddTask(title, description string) error {
 	if title == "" {
-		return fmt.Errorf("Title is empty, please input a title for the task")
+		return models.ErrNoTitle
 	}
 	if description == "" {
-		return fmt.Errorf("Description is empty, please input a description for the task")
+		return models.ErrNoDescription
 	}
 
 	taskList, err := storage.FromJSON()
@@ -79,7 +79,7 @@ func GetTaskByID(taskID int) error {
 		}
 	}
 
-	return fmt.Errorf("No task with this ID")
+	return models.ErrNoTaskWithThisID
 }
 
 func CompleteTask(taskID int) error {
@@ -106,7 +106,7 @@ func CompleteTask(taskID int) error {
 		return nil
 	}
 
-	return fmt.Errorf("No task with this ID")
+	return models.ErrNoTaskWithThisID
 }
 
 func DeleteTask(taskID int) error {
@@ -132,5 +132,5 @@ func DeleteTask(taskID int) error {
 		return nil
 	}
 
-	return fmt.Errorf("No task with this ID")
+	return models.ErrNoTaskWithThisID
 }
